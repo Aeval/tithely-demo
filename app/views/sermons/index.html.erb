@@ -1,0 +1,14 @@
+<div class="container my-5">
+    <div class="row">
+        <h1 class='col'>Sermons</h1>
+        <%= link_to "Create Sermon", new_sermon_path %>
+    </div>
+</div>
+
+<% @sermons.each do |sermon| %>
+    <div class='card bg-light card-body'>
+        <h3><%= sermon.title %></h3>
+        <p><%= sermon.description %></p>
+        <%= link_to "Read More", sermon_path(sermon), :class => 'btn btn-primary' %>
+    </div>
+<% end %>

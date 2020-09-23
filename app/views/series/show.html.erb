@@ -1,0 +1,14 @@
+<h2><%= @series.title %></h2>
+<p><%= @series.slug %></p><br><br>
+<a href="#" class="btn btn-primary float-right">Edit Series</a>
+<% if @series.seriesPic.attached? %>
+    <img height="500px" width="500px" src="<%=(url_for(@series.seriesPic))%>">
+<% end %>
+<% @series.sermons.each do |sermon| %>
+    <div class='card bg-light card-body'>
+        <h3><%= sermon.title %></h3>
+        <p><%= sermon.description %></p>
+        <small><%= sermon.sermon_time %></small>
+        <%= link_to "Read More", sermon_path(sermon), :class => 'btn btn-primary' %>
+    </div>
+<% end %>

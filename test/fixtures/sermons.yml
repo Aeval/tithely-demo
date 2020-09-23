@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  description: MyString
+  sermon_time: 2020-09-22 00:50:06
+  series: one
+
+two:
+  title: MyString
+  description: MyString
+  sermon_time: 2020-09-22 00:50:06
+  series: two

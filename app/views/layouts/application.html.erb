@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TithelyDemo</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag    'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css' %>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light px-5">
+        <a class="navbar-brand" href="/">Sermons</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                </li>
+            </ul>
+            <ul class="navbar-nav nav-right mr-2 ">
+                <li class="nav-item nav-right mr-5">
+                    <%= link_to "Series", series_index_path %>
+                </li>
+                <li class="nav-item nav-right">
+                    <%= link_to "Sermons", sermons_path %>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class='container my-5 mx-auto'>
+      <%= yield %>
+  </body>
+</html>
