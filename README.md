@@ -1,24 +1,29 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Tithe.ly Technical Demo - Rails/Frontend Developer
 
-Things you may want to cover:
+In order to set this up to run locally:
 
-* Ruby version
+1. Make sure you have Ruby '2.5.8' installed locally
 
-* System dependencies
+2. Make sure you have Rails '5.2.4.4' installed locally
 
-* Configuration
+3. Make sure you have [pgAdmin 4 and Postgres](https://www.postgresql.org/) installed locally
 
-* Database creation
+4. Clone repo locally
 
-* Database initialization
+5. Start pgAdmin or Postgres server
 
-* How to run the test suite
+6. Replace credentials in 'config/database.yml'
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+`
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see Rails configuration guide
+  # http://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: **localhost**
+  username: **postgres**
+  password: ********
+`
