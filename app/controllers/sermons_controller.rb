@@ -20,7 +20,7 @@ class SermonsController < ApplicationController
         @sermon = Sermon.new(sermon_params)
         
         if(@sermon.save)
-            redirect_to @sermon
+            redirect_to @sermon, notice: "Sermon successfully created!"
         else
             render new
         end
@@ -28,21 +28,21 @@ class SermonsController < ApplicationController
 
     def update
         @sermon = Sermon.find(params[:id])
-        
 
         if @sermon.update(sermon_params)
-            @sermon.sermonPic.attach(params[:sermonPic])
-            redirect_to @sermon
+            redirect_to @sermon, notice: "Sermon successfully updated!"
         else
             render json: { error: @sermon.errors.messages }, status: 422
         end
     end
 
     def destroy
-        sermon = Sermon.new(sermon_params)
+        sermon = Sermon.find(params[:id])
 
         if sermon.destroy
-            head :no_content               
+            respond_to do |format|
+                format.html { redirect_to sermons_url, notice: 'Sermon successfully deleted.' }
+            end
         else
             render json: { error: sermon.errors.messages }, status: 422
         end

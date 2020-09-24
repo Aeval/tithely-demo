@@ -5,10 +5,18 @@
     </div>
 </div>
 
-<% @sermons.each do |sermon| %>
-    <div class='card bg-light card-body'>
-        <h3><%= sermon.title %></h3>
-        <p><%= sermon.description %></p>
-        <%= link_to "Read More", sermon_path(sermon), :class => 'btn btn-primary' %>
+<div class="container my-5">
+    <div class="row">
+        <% flash.each do |msg, type| %>
+            <p class="alert alert-success"><%= type %></p>
+        <% end %>
     </div>
+</div>
+
+<% @sermons.each do |sermon| %>
+<div class='card bg-light card-body'>
+    <h3><%= sermon.title %></h3>
+    <p><%= sermon.description %></p>
+    <%= link_to "Read More", sermon_path(sermon), :class => 'btn btn-primary' %>
+</div>
 <% end %>
