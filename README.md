@@ -47,3 +47,5 @@ You should be all set up now, so start your server.
 Then you should see the app!
 
 If you don't, shoot me an email!
+
+Also, by default, the db seeding will not include images and the record will instead display a default static pic. Once the app is running, you can upload photos from your local machine to both update existing records and when creating new records.
