@@ -1,5 +1,6 @@
 <h1 class='my-5'>Add New Sermon</h1>
 
+<!-- Deliver alerts and messages -->
 <% flash.each do |msg, type| %>
 <% if(msg == 'notice') %>
 <p class="alert alert-success"><%= type %></p>
@@ -8,6 +9,7 @@
 <% end %>
 <% end %>
 
+<!-- Setup form to create new sermon  -->
 <%= form_for :sermon,  url: '/sermons' do |f| %>
 <% if @sermon.errors.any? %>
 <% @sermon.errors.full_messages.each do |msg| %>
@@ -41,7 +43,7 @@
 <script>
     $(document).ready(function() {
         $('select').addClass('form-control');
-        
+
         setTimeout(function() {
             $('.alert').fadeOut();
         }, 3000);

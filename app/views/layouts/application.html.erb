@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>Serious Sermons</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    
+
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <!-- Include Bootstrap and Font Awesome -->
     <%= stylesheet_link_tag    'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css' %>
     <%= javascript_include_tag 'https://kit.fontawesome.com/ab0e79cc48.js' %>
-  </head>
+</head>
 
-  <body>
+<body>
+    <!-- Setup Nav Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light px-5">
         <a class="navbar-brand" href="/">Serious Sermons</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,7 +37,9 @@
             </ul>
         </div>
     </nav>
+    <!-- Style yield container -->
     <div class='container my-5 mx-auto'>
-      <%= yield %>
-  </body>
+        <%= yield %>
+</body>
+
 </html>

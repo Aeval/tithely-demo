@@ -5,12 +5,14 @@ Rails.application.routes.draw do
   resources :series, param: :slug
   resources :sermons, param: :id
 
+  #Access coustom delete picture route - sermons 
   resources :sermons do
     member do
       delete :delete_image_attachment
     end
   end
 
+  #Access coustom delete picture route - series
   resources :series do
     member do
       delete :delete_image_attachment

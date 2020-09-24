@@ -5,6 +5,7 @@
     </div>
 </div>
 
+<!-- Deliver alerts and messages -->
 <% flash.each do |msg, type| %>
 <% if(msg == 'notice') %>
 <p class="alert alert-success"><%= type %></p>
@@ -13,11 +14,13 @@
 <% end %>
 <% end %>
 
+<!-- Create a list card for each sermon  -->
 <% @page_sermons.each do |sermon| %>
 <div class='card bg-light card-body my-5'>
     <div class="row no-gutters">
         <div class="col">
             <div class="photo-wrapper">
+                <!-- Check if series/sermon pic exists -->
                 <% if sermon.sermonPic.attached? %>
                 <img height="200px" width="200px" src="<%=(url_for(sermon.sermonPic))%>">
                 <% elsif sermon.series.seriesPic.attached? %>
@@ -39,8 +42,7 @@
 </div>
 <% end %>
 
-
-
+<!-- Pagination formating -->
 <div class="digg_pagination">
     <div class="page_info">
         <%= page_entries_info @page_sermons %>

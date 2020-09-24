@@ -5,6 +5,7 @@
     </div>
 </div>
 
+<!-- Deliver alerts and messages -->
 <% flash.each do |msg, type| %>
 <% if(msg == 'notice') %>
 <p class="alert alert-success"><%= type %></p>
@@ -13,6 +14,7 @@
 <% end %>
 <% end %>
 
+<!-- Create a list card for each series  -->
 <% @page_series.each do |series| %>
 <div class='card bg-light card-body my-5'>
     <div class="row no-gutters">
@@ -35,6 +37,7 @@
 </div>
 <% end %>
 
+<!-- Pagination formating -->
 <div class="digg_pagination">
     <div class="page_info">
         <%= page_entries_info @page_series %>

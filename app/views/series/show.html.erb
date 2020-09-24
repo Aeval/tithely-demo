@@ -1,3 +1,4 @@
+<!-- Deliver alerts and messages -->
 <% flash.each do |msg, type| %>
 <% if(msg == 'notice') %>
 <p class="alert alert-success"><%= type %></p>
@@ -6,9 +7,11 @@
 <% end %>
 <% end %>
 
+<!-- Main Container -->
 <div class="container">
     <div class="card mx-auto">
         <div class="mx-auto" style="width: 500px">
+            <!-- Check if series pic exists -->
             <% if @series.seriesPic.attached? %>
             <img height="500px" width="500px" src="<%=(url_for(@series.seriesPic))%>">
             <% else %>
@@ -24,6 +27,7 @@
         <div class="card-footer button-wrapper d-none text-muted">
             <div class="row px-3">
                 <button id="editBtn" type="button" class="btn btn-primary mr-auto">Edit Series</button>
+                <!-- Delete series btn setup  -->
                 <%= form_for :series, url: series_path, method: "delete" do |f| %>
                 <p>
                     <%= f.submit("Delete Series", {:class => 'float-right btn btn-danger', data: { confirm: "Are you sure?" }}) %>
@@ -31,22 +35,27 @@
                 <% end %>
             </div>
         </div>
+        <!-- Create a list card for each sermon  -->
         <div class="card-body">
             <% @page_sermons.each do |sermon| %>
             <div class='card bg-light card-body my-2'>
                 <div class="row no-gutters">
                     <div class="col">
                         <div class="photo-wrapper">
+                            <!-- Check if sermon pic exists -->
                             <% if sermon.sermonPic.attached? %>
                             <img height="200px" width="200px" src="<%=(url_for(sermon.sermonPic))%>">
+                            <!-- if not, use series -->
                             <% elsif @series.seriesPic.attached? %>
                             <img height="200px" width="200px" src="<%=(url_for(@series.seriesPic))%>" class="card-img" alt="church square">
+                            <!-- if not, use default -->
                             <% else %>
                             <img height="200px" width="200px" src="<%=(image_path('churchsquare.jpg'))%>" class="card-img" alt="church square">
                             <% end %>
                         </div>
                     </div>
                     <div class="col-md-8 my-auto">
+                        <!-- Inner sermon card formating -->
                         <div class="card-body">
                             <h4 class="card-title"><%= sermon.title %></h4>
                             <p class="card-text"><%= truncate(sermon.description, length: 250) %></p>
@@ -57,6 +66,8 @@
                 </div>
             </div>
             <% end %>
+
+            <!-- Pagination formating -->
             <div class="digg_pagination">
                 <div class="page_info">
                     <%= page_entries_info @page_sermons %>
@@ -67,6 +78,7 @@
     </div>
 </div>
 
+<!-- Setup update modal -->
 <div class="backdrop d-none">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -98,6 +110,8 @@
                     <%= link_to 'Remove Current Series Photo', delete_image_attachment_series_path(@series.seriesPic.id),
                 method: :delete %>
                 </p>
+                <% else %>
+                <p class="text-danger">No Series Picture Attached - Showing Default</p>
                 <% end %>
 
                 <p>

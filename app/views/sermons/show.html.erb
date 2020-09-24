@@ -1,3 +1,4 @@
+<!-- Deliver alerts and messages -->
 <% flash.each do |msg, type| %>
 <% if(msg == 'notice') %>
 <p class="alert alert-success"><%= type %></p>
@@ -5,9 +6,12 @@
 <p class="alert alert-danger"><%= type %></p>
 <% end %>
 <% end %>
+
+<!-- Main Container -->
 <div class="container">
     <div class="card mx-auto">
         <div class="mx-auto" style="width: 500px">
+            <!-- Check if series/sermon pic exists -->
             <% if @sermon.sermonPic.attached? %>
             <img class="card-img-top" height="500px" width="500px" src="<%=(url_for(@sermon.sermonPic))%>">
             <% elsif @sgl_series.seriesPic.attached? %>
@@ -16,6 +20,7 @@
             <img height="500px" width="500px" src="<%=(image_path('churchsquare.jpg'))%>" class="card-img-top" alt="church square">
             <% end %>
         </div>
+        <!-- Sermon card formating -->
         <div class="card-footer text-muted">
             <% if @sgl_series.id != 0 %>
             <div class="row">
@@ -34,6 +39,7 @@
         <div class="card-footer button-wrapper d-none text-muted">
             <div class="row px-3">
                 <button id="editBtn" type="button" class="mr-auto btn btn-primary">Edit Sermon</button>
+                <!-- Delete sermon btn setup  -->
                 <%= form_for :sermon, url: sermon_path, method: "delete" do |f| %>
                 <p>
                     <%= f.submit("Delete",{class: "float-right btn btn-danger", data: { confirm: "Are you sure?"}} ) %>
@@ -44,8 +50,7 @@
     </div>
 </div>
 
-
-
+<!-- Setup update modal -->
 <div class="backdrop d-none">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -88,7 +93,7 @@
                 method: :delete %>
                 </p>
                 <% else %>
-                    <p class="text-danger">No Sermon Picture Attached - Showing Series</p>
+                <p class="text-danger">No Sermon Picture Attached - Showing Series</p>
                 <% end %>
 
                 <p>

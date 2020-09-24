@@ -1,9 +1,11 @@
 class Sermon < ApplicationRecord
+  #Define relationships
   belongs_to :series
   has_one_attached :sermonPic
 
+  #Before creation: create slug from title and set sermon time to now
   before_create :cleanData
-
+  #Validate attachment format
   validate :sermonPic_format
 
   def cleanData
@@ -13,6 +15,7 @@ class Sermon < ApplicationRecord
 
   private
 
+  #Validate attachment format
   def sermonPic_format
     return unless sermonPic.attached?
     if sermonPic.blob.content_type.start_with? 'image/'
