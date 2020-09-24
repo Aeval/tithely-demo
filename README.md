@@ -16,7 +16,7 @@ In order to set this up to run locally:
 
 6. Replace credentials in 'config/database.yml'
 
-`
+```ruby
 default: &default
   adapter: postgresql
   encoding: unicode
@@ -26,4 +26,4 @@ default: &default
   host: **localhost**
   username: **postgres**
   password: ********
-`
+```
