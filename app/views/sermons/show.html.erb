@@ -5,22 +5,46 @@
 <p class="alert alert-danger"><%= type %></p>
 <% end %>
 <% end %>
-<h2><%= @sermon.title %></h2>
-<p><%= @sermon.description %></p>
-<p><%= I18n.l(@sermon.sermon_time, format: :long, locale: :'en-US') %></p>
-<% if @sermon.sermonPic.attached? %>
-<img height="500px" width="500px" src="<%=(url_for(@sermon.sermonPic))%>">
-<% elsif @sgl_series.seriesPic.attached? %>
-<img height="500px" width="500px" src="<%=(url_for(@sgl_series.seriesPic))%>">
-<% else %>
-<% end %>
-<p><%= @sermon.series_id %></p>
-<button id="editBtn" type="button" class="btn btn-primary">Edit Sermon</button>
-<%= form_for :sermon, url: sermon_path, method: "delete" do |f| %>
-<p>
-    <%= f.submit("Delete Sermon",{class: "btn btn-danger", data: { confirm: "Are you sure?"}} ) %>
-</p>
-<% end %>
+<div class="container">
+    <div class="card mx-auto">
+        <div class="mx-auto" style="width: 500px">
+            <% if @sermon.sermonPic.attached? %>
+            <img class="card-img-top" height="500px" width="500px" src="<%=(url_for(@sermon.sermonPic))%>">
+            <% elsif @sgl_series.seriesPic.attached? %>
+            <img class="card-img-top" height="500px" width="500px" src="<%=(url_for(@sgl_series.seriesPic))%>">
+            <% else %>
+            <img height="500px" width="500px" src="<%=(image_path('churchsquare.jpg'))%>" class="card-img-top" alt="church square">
+            <% end %>
+        </div>
+        <div class="card-footer text-muted">
+            <% if @sgl_series.id != 0 %>
+            <div class="row">
+                <p class="mr-auto my-auto">Series: <%= link_to (@sgl_series.title), series_path(@sgl_series.slug) %></p>
+            </div>
+            <% end  %>
+            <div class="row">
+                <p class="mr-auto my-auto"><%= I18n.l(@sermon.sermon_time, format: :long, locale: :'en-US') %></p>
+                <i class="my-auto float-right fas fa-cog"></i>
+            </div>
+        </div>
+        <div class="card-body">
+            <h2 class="card-title"><%= @sermon.title %></h2>
+            <p class="card-text"><%= @sermon.description %></p>
+        </div>
+        <div class="card-footer button-wrapper d-none text-muted">
+            <div class="row px-3">
+                <button id="editBtn" type="button" class="mr-auto btn btn-primary">Edit Sermon</button>
+                <%= form_for :sermon, url: sermon_path, method: "delete" do |f| %>
+                <p>
+                    <%= f.submit("Delete",{class: "float-right btn btn-danger", data: { confirm: "Are you sure?"}} ) %>
+                </p>
+                <% end %>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <div class="backdrop d-none">
     <div class="modal-dialog">
@@ -60,9 +84,11 @@
 
                 <% if @sermon.sermonPic.attached? %>
                 <p>
-                <%= link_to 'Remove Current Sermon Photo', delete_image_attachment_sermon_url(@sermon.sermonPic.id),
+                    <%= link_to 'Remove Current Sermon Photo', delete_image_attachment_sermon_url(@sermon.sermonPic.id),
                 method: :delete %>
                 </p>
+                <% else %>
+                    <p class="text-danger">No Sermon Picture Attached - Showing Series</p>
                 <% end %>
 
                 <p>
@@ -97,9 +123,20 @@
         $('.backdrop').toggleClass('d-none');
     });
 
+    $('.fa-cog').click((e) => {
+        if ($('.button-wrapper').hasClass('d-none')) {
+            $('.button-wrapper').removeClass('d-none');
+        } else {
+            $('.button-wrapper').addClass('d-none');
+        }
+
+    });
+
     $(document).ready(function() {
+        $('select').addClass('form-control');
+
         setTimeout(function() {
             $('.alert').fadeOut();
         }, 3000);
-    })
+    });
 </script>

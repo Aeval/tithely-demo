@@ -1,7 +1,7 @@
 class SermonsController < ApplicationController
     protect_from_forgery with: :null_session
     def index
-        @sermons = Sermon.all
+        @sermons = Sermon.all.order('created_at DESC')
         @page_sermons = @sermons.paginate(page:params[:page],per_page:10)
         #render json: SermonSerializer.new(sermons).serialized_json
     end
@@ -24,7 +24,7 @@ class SermonsController < ApplicationController
         if(@sermon.save)
             redirect_to @sermon, notice: "Sermon successfully created!"
         else
-            render new
+            render new, alert: "Sermon could not be created!"  
         end
     end
 
@@ -47,7 +47,7 @@ class SermonsController < ApplicationController
                 format.html { redirect_to sermons_url, notice: 'Sermon successfully deleted.' }
             end
         else
-            redirect_to sermon, alert: "Sermon could not be deleted!"
+            redirect_back(fallback_location: sermons_url, alert: "Sermon could not be deleted!")
         end
     end
 

@@ -1,21 +1,40 @@
 <h1 class='my-5'>Add New Series</h1>
-<%= form_for :series, url: '/series' do |f| %>
-	<% if @series.errors.any? %>
-		<% @series.errors.full_messages.each do |msg| %>
-			<div class='alert alert-danger'><%= msg %></div>
-		<% end %>
-	<% end %>
-	<p>
-		<%= f.label :title %><br />
-		<%= f.text_field(:title, {:class => 'form-control', required: true}) %>
-	</p>
 
-	<p>
-		<%= f.label "Series Photo" %><br />
-		<%= f.file_field(:seriesPic, {:class => 'form-control'}) %>
-	</p>
-
-	<p>
-		<%= f.submit({:class => 'btn btn-primary'}) %>
-	</p>
+<% flash.each do |msg, type| %>
+<% if(msg == 'notice') %>
+<p class="alert alert-success"><%= type %></p>
+<% else %>
+<p class="alert alert-danger"><%= type %></p>
 <% end %>
+<% end %>
+
+<%= form_for :series, url: '/series' do |f| %>
+<% if @series.errors.any? %>
+<% @series.errors.full_messages.each do |msg| %>
+<div class='alert alert-danger'><%= msg %></div>
+<% end %>
+<% end %>
+<p>
+    <%= f.label :title %><br />
+    <%= f.text_field(:title, {:class => 'form-control', required: true}) %>
+</p>
+
+<p>
+    <%= f.label "Series Photo" %><br />
+    <%= f.file_field(:seriesPic, {:class => 'form-control'}) %>
+</p>
+
+<p>
+    <%= f.submit({:class => 'btn btn-primary'}) %>
+</p>
+<% end %>
+
+<script>
+    $(document).ready(function() {
+        $('select').addClass('form-control');
+        
+        setTimeout(function() {
+            $('.alert').fadeOut();
+        }, 3000);
+    });
+</script>

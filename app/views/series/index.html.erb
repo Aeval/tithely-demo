@@ -5,10 +5,33 @@
     </div>
 </div>
 
+<% flash.each do |msg, type| %>
+<% if(msg == 'notice') %>
+<p class="alert alert-success"><%= type %></p>
+<% else %>
+<p class="alert alert-danger"><%= type %></p>
+<% end %>
+<% end %>
+
 <% @page_series.each do |series| %>
-<div class='card bg-light card-body'>
-    <h3><%= series.title %></h3>
-    <%= link_to "Read More", series_path(series), :class => 'btn btn-primary' %>
+<div class='card bg-light card-body my-5'>
+    <div class="row no-gutters">
+        <div class="col">
+            <div class="photo-wrapper">
+                <% if series.seriesPic.attached? %>
+                <img height="200px" width="200px" src="<%=(url_for(series.seriesPic))%>">
+                <% else %>
+                <img height="200px" width="200px" src="<%=(image_path('churchsquare.jpg'))%>" class="card-img" alt="church square">
+                <% end %>
+            </div>
+        </div>
+        <div class="col-md-8 my-auto">
+            <div class="card-body">
+                <h2 class="card-title"><%= series.title %></h2>
+                <%= link_to "Explore Sermons in this Series", series_path(series), :class => 'btn btn-primary' %>
+            </div>
+        </div>
+    </div>
 </div>
 <% end %>
 
@@ -18,3 +41,49 @@
     </div>
     <%= will_paginate @page_series, :container => false %>
 </div>
+
+<style>
+    .photo-wrapper {
+        width: 200px;
+    }
+
+    .hovered {
+        -webkit-box-shadow: 23px 23px 12px -6px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 23px 23px 12px -6px rgba(0, 0, 0, 0.75);
+        box-shadow: 23px 23px 12px -6px rgba(0, 0, 0, 0.75);
+    }
+</style>
+
+<script>
+    $('.card').hover(function(e) {
+        $(this).addClass('hovered');
+        $(this).animate({
+            margin: -10,
+            width: "+=20",
+            height: "+=20"
+        }, 200);
+        $(this).find('img').animate({
+            margin: 0,
+            width: "+=20",
+            height: "+=20"
+        }, 200);
+    }, function(e) {
+        $(this).removeClass('hovered');
+        $(this).animate({
+            margin: 0,
+            width: "-=20",
+            height: "-=20"
+        }, 200);
+        $(this).find('img').animate({
+            margin: 0,
+            width: "-=20",
+            height: "-=20"
+        }, 200);
+    });
+
+    $(document).ready(function() {
+        setTimeout(function() {
+            $('.alert').fadeOut();
+        }, 3000);
+    })
+</script>

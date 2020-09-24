@@ -1,33 +1,49 @@
 <h1 class='my-5'>Add New Sermon</h1>
+
+<% flash.each do |msg, type| %>
+<% if(msg == 'notice') %>
+<p class="alert alert-success"><%= type %></p>
+<% else %>
+<p class="alert alert-danger"><%= type %></p>
+<% end %>
+<% end %>
+
 <%= form_for :sermon,  url: '/sermons' do |f| %>
-	<% if @sermon.errors.any? %>
-		<% @sermon.errors.full_messages.each do |msg| %>
-			<div class='alert alert-danger'><%= msg %></div>
-		<% end %>
-	<% end %>
-	<p>
-		<%= f.label :title %><br />
-		<%= f.text_field(:title, {:class => 'form-control', required: true }) %>
-	</p>
+<% if @sermon.errors.any? %>
+<% @sermon.errors.full_messages.each do |msg| %>
+<div class='alert alert-danger'><%= msg %></div>
+<% end %>
+<% end %>
+<p>
+    <%= f.label :title %><br />
+    <%= f.text_field(:title, {:class => 'form-control', required: true }) %>
+</p>
 
-	<p>
-		<%= f.label :description %><br />
-		<%= f.text_area(:description, {:class => 'form-control', required: true }) %>
-	</p>
+<p>
+    <%= f.label :description %><br />
+    <%= f.text_area(:description, {:class => 'form-control', required: true }) %>
+</p>
 
-	<p>
-		<%= f.label "Series?" %><br />
-		<%= f.collection_select(:series_id, @series.order(:id), :id, :title, include_blank: false) %>
-	</p>
+<p>
+    <%= f.label "Series?" %><br />
+    <%= f.collection_select(:series_id, @series.order(:id), :id, :title, include_blank: false) %>
+</p>
 
-	<p>
-		<%= f.label "Sermon Photo" %><br />
-		<%= f.file_field(:sermonPic, {:class => 'form-control'}) %>
-	</p>
+<p>
+    <%= f.label "Sermon Photo" %><br />
+    <%= f.file_field(:sermonPic, {:class => 'form-control'}) %>
+</p>
 
-	<p>
-		<%= f.submit({:class => 'btn btn-primary'}) %>
-	</p>
+<p>
+    <%= f.submit({:class => 'btn btn-primary'}) %>
+</p>
 <% end %>
 <script>
+    $(document).ready(function() {
+        $('select').addClass('form-control');
+        
+        setTimeout(function() {
+            $('.alert').fadeOut();
+        }, 3000);
+    });
 </script>

@@ -2,14 +2,14 @@ class SeriesController < ApplicationController
     protect_from_forgery with: :null_session
 
     def index
-        @series = Series.where.not(id: 0)
+        @series = Series.where.not(id: 0).order('created_at DESC')
         @page_series = @series.paginate(page:params[:page],per_page:10)
         #render json: SeriesSerializer.new(series, options).serialized_json
     end
 
     def show
         @series = Series.friendly.find(params[:slug])
-
+        @page_sermons = @series.sermons.paginate(page:params[:page],per_page:3)
         #render json: SeriesSerializer.new(singleSeries, options).serialized_json
     end
 
@@ -24,7 +24,7 @@ class SeriesController < ApplicationController
         if(singleSeries.save)
             redirect_to singleSeries, notice: "Series successfully created!"   
         else
-            render new
+            render new, alert: "Series could not be created!"  
         end
     end
 
