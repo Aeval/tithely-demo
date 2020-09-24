@@ -1,11 +1,17 @@
 <% flash.each do |msg, type| %>
+<% if(msg == 'notice') %>
 <p class="alert alert-success"><%= type %></p>
+<% else %>
+<p class="alert alert-danger"><%= type %></p>
+<% end %>
 <% end %>
 <h2><%= @sermon.title %></h2>
 <p><%= @sermon.description %></p>
 <p><%= @sermon.sermon_time %></p>
 <% if @sermon.sermonPic.attached? %>
 <img height="500px" width="500px" src="<%=(url_for(@sermon.sermonPic))%>">
+<% else %>
+<img height="500px" width="500px" src="<%=(url_for(@sgl_series.seriesPic))%>">
 <% end %>
 <p><%= @sermon.series_id %></p>
 <button id="editBtn" type="button" class="btn btn-primary">Edit Sermon</button>
@@ -43,7 +49,7 @@
 
                 <p>
                     <%= f.label "Update Series?" %><br />
-                    <%= f.collection_select(:series_id, @series.order(:id), :id, :title, include_blank: true) %>
+                    <%= f.collection_select(:series_id, @series.order(:id), :id, :title, include_blank: false) %>
                 </p>
 
                 <p>

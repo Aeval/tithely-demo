@@ -8,6 +8,7 @@ class SermonsController < ApplicationController
     def show
         @sermon = Sermon.find(params[:id])
         @series = Series.all
+        @sgl_series = Series.find(@sermon.series_id)
         #render json: SermonSerializer.new(sermon, options).serialized_json
     end
 
@@ -27,24 +28,25 @@ class SermonsController < ApplicationController
     end
 
     def update
+        #TODO: Add delete current photo checkbox
         @sermon = Sermon.find(params[:id])
 
         if @sermon.update(sermon_params)
             redirect_to @sermon, notice: "Sermon successfully updated!"
         else
-            render json: { error: @sermon.errors.messages }, status: 422
+            redirect_to sermon, alert: "Sermon could not be deleted!"
         end
     end
 
     def destroy
         sermon = Sermon.find(params[:id])
 
-        if sermon.destroy
+        if (sermon.destroy)
             respond_to do |format|
                 format.html { redirect_to sermons_url, notice: 'Sermon successfully deleted.' }
             end
         else
-            render json: { error: sermon.errors.messages }, status: 422
+            redirect_to sermon, alert: "Sermon could not be deleted!"
         end
     end
 

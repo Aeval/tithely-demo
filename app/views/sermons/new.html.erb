@@ -17,7 +17,7 @@
 
 	<p>
 		<%= f.label "Series?" %><br />
-		<%= f.collection_select(:series_id, @series.order(:id), :id, :title, include_blank: true) %>
+		<%= f.collection_select(:series_id, @series.order(:id), :id, :title, include_blank: false) %>
 	</p>
 
 	<p>
