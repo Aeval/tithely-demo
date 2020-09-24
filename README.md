@@ -40,7 +40,7 @@ default: &default
 
 You should be all set up now, so start your server.
 
-12. Run ``` rails server -p 3000 ``` or ``` rails -s ```
+12. Run ``` rails server -p 3000 ``` or ``` rails server ```
 
 13. Navigate to [localhost:3000](http://localhost:3000) in your browser
 
