@@ -45,3 +45,5 @@ You should be all set up now, so start your server.
 13. Navigate to [localhost:3000](http://localhost:3000) in your browser
 
 Then you should see the app!
+
+If you don't, shoot me an email!
