@@ -5,10 +5,16 @@
     </div>
 </div>
 
-<% @series.each do |series| %>
-    <div class='card bg-light card-body'>
-        <h3><%= series.title %></h3>
-        <p><%= series.slug %></p>
-        <%= link_to "Read More", series_path(series), :class => 'btn btn-primary' %>
-    </div>
+<% @page_series.each do |series| %>
+<div class='card bg-light card-body'>
+    <h3><%= series.title %></h3>
+    <%= link_to "Read More", series_path(series), :class => 'btn btn-primary' %>
+</div>
 <% end %>
+
+<div class="digg_pagination">
+    <div class="page_info">
+        <%= page_entries_info @page_series %>
+    </div>
+    <%= will_paginate @page_series, :container => false %>
+</div>

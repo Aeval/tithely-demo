@@ -7,17 +7,18 @@
 <% end %>
 <h2><%= @sermon.title %></h2>
 <p><%= @sermon.description %></p>
-<p><%= @sermon.sermon_time %></p>
+<p><%= I18n.l(@sermon.sermon_time, format: :long, locale: :'en-US') %></p>
 <% if @sermon.sermonPic.attached? %>
 <img height="500px" width="500px" src="<%=(url_for(@sermon.sermonPic))%>">
-<% else %>
+<% elsif @sgl_series.seriesPic.attached? %>
 <img height="500px" width="500px" src="<%=(url_for(@sgl_series.seriesPic))%>">
+<% else %>
 <% end %>
 <p><%= @sermon.series_id %></p>
 <button id="editBtn" type="button" class="btn btn-primary">Edit Sermon</button>
 <%= form_for :sermon, url: sermon_path, method: "delete" do |f| %>
 <p>
-    <%= f.submit("Delete Sermon", {:class => 'btn btn-danger'}) %>
+    <%= f.submit("Delete Sermon",{class: "btn btn-danger", data: { confirm: "Are you sure?"}} ) %>
 </p>
 <% end %>
 
@@ -39,12 +40,12 @@
                 <% end %>
                 <p>
                     <%= f.label :title %><br />
-                    <%= f.text_field(:title, {:class => 'form-control'}) %>
+                    <%= f.text_field(:title, {:class => 'form-control', required: true}) %>
                 </p>
 
                 <p>
                     <%= f.label :description %><br />
-                    <%= f.text_area(:description, {:class => 'form-control'}) %>
+                    <%= f.text_area(:description, {:class => 'form-control', required: true}) %>
                 </p>
 
                 <p>
@@ -56,6 +57,13 @@
                     <%= f.label "Sermon Photo" %><br />
                     <%= f.file_field(:sermonPic, {:class => 'form-control'}) %>
                 </p>
+
+                <% if @sermon.sermonPic.attached? %>
+                <p>
+                <%= link_to 'Remove Current Sermon Photo', delete_image_attachment_sermon_url(@sermon.sermonPic.id),
+                method: :delete %>
+                </p>
+                <% end %>
 
                 <p>
                     <%= f.submit({:class => 'btn btn-primary'}) %>

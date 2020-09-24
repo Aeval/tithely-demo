@@ -13,13 +13,20 @@
     </div>
 </div>
 
-<% @sermons.each do |sermon| %>
+<% @page_sermons.each do |sermon| %>
 <div class='card bg-light card-body'>
     <h3><%= sermon.title %></h3>
-    <p><%= sermon.description %></p>
+    <p><%= truncate(sermon.description, length: 250) %></p>
     <%= link_to "Read More", sermon_path(sermon), :class => 'btn btn-primary' %>
 </div>
 <% end %>
+
+<div class="digg_pagination">
+    <div class="page_info">
+        <%= page_entries_info @page_sermons %>
+    </div>
+    <%= will_paginate @page_sermons, :container => false %>
+</div>
 
 <script>
     $(document).ready(function() {

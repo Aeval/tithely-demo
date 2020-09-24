@@ -11,7 +11,7 @@
         <button id="editBtn" type="button" class="btn btn-primary float-right">Edit Series</button>
         <%= form_for :series, url: series_path, method: "delete" do |f| %>
         <p>
-            <%= f.submit("Delete Series", {:class => 'btn btn-danger'}) %>
+            <%= f.submit("Delete Series", {:class => 'btn btn-danger', data: { confirm: "Are you sure?" }}) %>
         </p>
         <% end %>
     </div>
@@ -24,7 +24,7 @@
 <div class='card bg-light card-body'>
     <h3><%= sermon.title %></h3>
     <p><%= sermon.description %></p>
-    <small><%= sermon.sermon_time %></small>
+    <small><%= I18n.l(sermon.sermon_time, format: :long, locale: :'en-US') %></small>
     <%= link_to "Read More", sermon_path(sermon), :class => 'btn btn-primary' %>
 </div>
 <% end %>
@@ -47,13 +47,20 @@
                 <% end %>
                 <p>
                     <%= f.label :title %><br />
-                    <%= f.text_field(:title, {:class => 'form-control'}) %>
+                    <%= f.text_field(:title, {:class => 'form-control', required: true}) %>
                 </p>
 
                 <p>
                     <%= f.label "Series Photo" %><br />
                     <%= f.file_field(:seriesPic, {:class => 'form-control'}) %>
                 </p>
+
+                <% if @series.seriesPic.attached? %>
+                <p>
+                <%= link_to 'Remove Current Series Photo', delete_image_attachment_series_path(@series.seriesPic.id),
+                method: :delete %>
+                </p>
+                <% end %>
 
                 <p>
                     <%= f.submit({:class => 'btn btn-primary'}) %>

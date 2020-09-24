@@ -3,6 +3,7 @@ class SeriesController < ApplicationController
 
     def index
         @series = Series.where.not(id: 0)
+        @page_series = @series.paginate(page:params[:page],per_page:10)
         #render json: SeriesSerializer.new(series, options).serialized_json
     end
 
@@ -49,6 +50,12 @@ class SeriesController < ApplicationController
         else
             redirect_to singleSeries, alert: "Series could not be deleted!"
         end
+    end
+
+    def delete_image_attachment
+        @seriesPic = ActiveStorage::Attachment.find(params[:id])
+        @seriesPic.purge
+        redirect_back(fallback_location: series_index_url)
     end
 
     private

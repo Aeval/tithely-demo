@@ -2,6 +2,7 @@ class SermonsController < ApplicationController
     protect_from_forgery with: :null_session
     def index
         @sermons = Sermon.all
+        @page_sermons = @sermons.paginate(page:params[:page],per_page:10)
         #render json: SermonSerializer.new(sermons).serialized_json
     end
 
@@ -34,7 +35,7 @@ class SermonsController < ApplicationController
         if @sermon.update(sermon_params)
             redirect_to @sermon, notice: "Sermon successfully updated!"
         else
-            redirect_to sermon, alert: "Sermon could not be deleted!"
+            redirect_to @sermon, alert: "Sermon could not be updated!"
         end
     end
 
@@ -48,6 +49,12 @@ class SermonsController < ApplicationController
         else
             redirect_to sermon, alert: "Sermon could not be deleted!"
         end
+    end
+
+    def delete_image_attachment
+        @sermonPic = ActiveStorage::Attachment.find(params[:id])
+        @sermonPic.purge
+        redirect_back(fallback_location: sermons_url)
     end
 
     private
