@@ -50,14 +50,14 @@ class SeriesController < ApplicationController
     end
 
     def destroy
-        #Find sermon to destroy
+        #Find series to destroy
         singleSeries = Series.friendly.find(params[:slug])
         singleSeries.sermons.each { |sermon| sermon.update_attributes(series_id: 0) }
 
         if singleSeries.destroy
             #redirect to series index
             respond_to do |format|
-                format.html { redirect_to series_index_url, notice: 'Sermon successfully deleted.' }
+                format.html { redirect_to series_index_url, notice: 'Series successfully deleted.' }
             end              
         else
             #Redirect to series
