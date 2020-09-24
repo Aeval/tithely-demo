@@ -14,7 +14,7 @@ In order to set this up to run locally:
 
 5. Start pgAdmin or Postgres server
 
-6. Replace credentials in 'config/database.yml'
+6. Replace credentials in 'config/database.yml' with whatever you have pgAdmin set up on
 
 ```ruby
 default: &default
@@ -23,7 +23,25 @@ default: &default
   # For details on connection pooling, see Rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  host: **localhost**
-  username: **postgres**
+  host: localhost
+  username: postgres
   password: ********
 ```
+
+7. Open the repo in a code editor like vscode
+
+8. In the terminal run ``` bundle install ```
+
+9. Run ``` rails db:create ```
+
+10. Run ``` rails db:migrate ```
+
+11. Run ``` rails db:seed ```
+
+You should be all set up now, so start your server.
+
+12. Run ``` rails server -p 3000 ``` or ``` rails -s ```
+
+13. Navigate to [localhost:3000](http://localhost:3000) in your browser
+
+Then you should see the app!
