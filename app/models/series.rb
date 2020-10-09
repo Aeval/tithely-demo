@@ -8,13 +8,15 @@ class Series < ApplicationRecord
     friendly_id :title, use: :slugged
 
     #Before creation: create slug from title and capitialize first letter of title
-    before_create :cleanData
+    before_save :cleanData
     #Validate attachment format
     validate :seriesPic_format
 
+    validates_presence_of :title
+
     def cleanData
         self.slug = title.parameterize
-        self.title = title.capitalize
+        self.title = title.strip.capitalize
     end
 
     private

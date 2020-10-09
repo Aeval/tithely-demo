@@ -45,7 +45,7 @@ class SeriesController < ApplicationController
             #redirect to series
             redirect_to singleSeries, notice: "Series successfully updated!"          
         else
-            redirect_to series, alert: "Series could not be updated!"
+            redirect_to series_url, alert: "Series could not be updated!"
         end
     end
 

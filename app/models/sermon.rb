@@ -4,12 +4,14 @@ class Sermon < ApplicationRecord
   has_one_attached :sermonPic
 
   #Before creation: create slug from title and set sermon time to now
-  before_create :cleanData
+  before_save :cleanData
   #Validate attachment format
   validate :sermonPic_format
 
+  validates_presence_of :title, :description
+
   def cleanData
-    self.title = title.capitalize
+    self.title = title.strip.capitalize
     self.sermon_time = Time.current
   end
 
