@@ -7,8 +7,9 @@ class Series < ApplicationRecord
     extend FriendlyId
     friendly_id :title, use: :slugged
 
-    #Before creation: create slug from title and capitialize first letter of title
+    #Before save: create slug from title and capitialize first letter of title
     before_save :cleanData
+
     #Validate attachment format
     validate :seriesPic_format
 

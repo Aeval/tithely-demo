@@ -6,49 +6,13 @@
 </div>
 
 <!-- Deliver alerts and messages -->
-<% flash.each do |msg, type| %>
-<% if(msg == 'notice') %>
-<p class="alert alert-success"><%= type %></p>
-<% else %>
-<p class="alert alert-danger"><%= type %></p>
-<% end %>
-<% end %>
+<%= render 'partials/alerts' %>
 
 <!-- Create a list card for each sermon  -->
-<% @page_sermons.each do |sermon| %>
-<div class='card bg-light card-body my-5'>
-    <div class="row no-gutters">
-        <div class="col">
-            <div class="photo-wrapper">
-                <!-- Check if series/sermon pic exists -->
-                <% if sermon.sermonPic.attached? %>
-                <img height="200px" width="200px" src="<%=(url_for(sermon.sermonPic))%>">
-                <% elsif sermon.series.seriesPic.attached? %>
-                <img height="200px" width="200px" src="<%=(url_for(sermon.series.seriesPic))%>" class="card-img" alt="church square">
-                <% else %>
-                <img height="200px" width="200px" src="<%=(image_path('churchsquare.jpg'))%>" class="card-img" alt="church square">
-                <% end %>
-            </div>
-        </div>
-        <div class="col-md-8 my-auto">
-            <div class="card-body">
-                <h4 class="card-title"><%= sermon.title %></h4>
-                <p class="card-text"><%= truncate(sermon.description, length: 250) %></p>
-                <p class="card-text"><small class="text-muted"><%= I18n.l(sermon.sermon_time, format: :long, locale: :'en-US') %></small></p>
-                <%= link_to "Read More", sermon_path(sermon), :class => 'btn btn-primary' %>
-            </div>
-        </div>
-    </div>
-</div>
-<% end %>
+<%= render 'partials/sermon_list_cards' %>
 
 <!-- Pagination formating -->
-<div class="digg_pagination">
-    <div class="page_info">
-        <%= page_entries_info @page_sermons %>
-    </div>
-    <%= will_paginate @page_sermons, :container => false %>
-</div>
+<%= render 'partials/pagination', to_paginate: @page_sermons %>
 
 <style>
     .photo-wrapper {
@@ -60,38 +24,11 @@
         -moz-box-shadow: 23px 23px 12px -6px rgba(0, 0, 0, 0.75);
         box-shadow: 23px 23px 12px -6px rgba(0, 0, 0, 0.75);
     }
+
+    .card {
+        margin-top: 3rem !important;
+        margin-bottom: 3rem !important;
+    }
 </style>
-
-<script>
-    $('.card').hover(function(e) {
-        $(this).addClass('hovered');
-        $(this).animate({
-            margin: -10,
-            width: "+=20",
-            height: "+=20"
-        }, 200);
-        $(this).find('img').animate({
-            margin: 0,
-            width: "+=20",
-            height: "+=20"
-        }, 200);
-    }, function(e) {
-        $(this).removeClass('hovered');
-        $(this).animate({
-            margin: 0,
-            width: "-=20",
-            height: "-=20"
-        }, 200);
-        $(this).find('img').animate({
-            margin: 0,
-            width: "-=20",
-            height: "-=20"
-        }, 200);
-    });
-
-    $(document).ready(function() {
-        setTimeout(function() {
-            $('.alert').fadeOut();
-        }, 3000);
-    })
-</script>
+<!-- Scripts for index pages -->
+<%= javascript_include_tag 'indexScripts' %>

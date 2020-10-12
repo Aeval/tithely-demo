@@ -1,11 +1,5 @@
 <!-- Deliver alerts and messages -->
-<% flash.each do |msg, type| %>
-<% if(msg == 'notice') %>
-<p class="alert alert-success"><%= type %></p>
-<% else %>
-<p class="alert alert-danger"><%= type %></p>
-<% end %>
-<% end %>
+<%= render 'partials/alerts' %>
 
 <!-- Main Container -->
 <div class="container">
@@ -37,43 +31,10 @@
         </div>
         <!-- Create a list card for each sermon  -->
         <div class="card-body">
-            <% @page_sermons.each do |sermon| %>
-            <div class='card bg-light card-body my-2'>
-                <div class="row no-gutters">
-                    <div class="col">
-                        <div class="photo-wrapper">
-                            <!-- Check if sermon pic exists -->
-                            <% if sermon.sermonPic.attached? %>
-                            <img height="200px" width="200px" src="<%=(url_for(sermon.sermonPic))%>">
-                            <!-- if not, use series -->
-                            <% elsif @series.seriesPic.attached? %>
-                            <img height="200px" width="200px" src="<%=(url_for(@series.seriesPic))%>" class="card-img" alt="church square">
-                            <!-- if not, use default -->
-                            <% else %>
-                            <img height="200px" width="200px" src="<%=(image_path('churchsquare.jpg'))%>" class="card-img" alt="church square">
-                            <% end %>
-                        </div>
-                    </div>
-                    <div class="col-md-8 my-auto">
-                        <!-- Inner sermon card formating -->
-                        <div class="card-body">
-                            <h4 class="card-title"><%= sermon.title %></h4>
-                            <p class="card-text"><%= truncate(sermon.description, length: 250) %></p>
-                            <p class="card-text"><small class="text-muted"><%= I18n.l(sermon.sermon_time, format: :long, locale: :'en-US') %></small></p>
-                            <%= link_to "Read More", sermon_path(sermon), :class => 'btn btn-primary' %>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <% end %>
+            <%= render 'partials/sermon_list_cards' %>
 
             <!-- Pagination formating -->
-            <div class="digg_pagination">
-                <div class="page_info">
-                    <%= page_entries_info @page_sermons %>
-                </div>
-                <%= will_paginate @page_sermons, :container => false %>
-            </div>
+            <%= render 'partials/pagination', to_paginate: @page_sermons %>
         </div>
     </div>
 </div>
@@ -146,30 +107,11 @@
         -moz-box-shadow: 23px 23px 12px -6px rgba(0, 0, 0, 0.75);
         box-shadow: 23px 23px 12px -6px rgba(0, 0, 0, 0.75);
     }
+
+    .card {
+        margin-top: .5rem !important;
+        margin-bottom: .5rem !important;
+    }
 </style>
-<script>
-    $('#editBtn').on('click', () => {
-        $('.backdrop').toggleClass('d-none');
-    });
-
-    $('#closeBtn').on('click', () => {
-        $('.backdrop').toggleClass('d-none');
-    });
-
-    $('.fa-cog').click((e) => {
-        if ($('.button-wrapper').hasClass('d-none')) {
-            $('.button-wrapper').removeClass('d-none');
-        } else {
-            $('.button-wrapper').addClass('d-none');
-        }
-
-    });
-
-    $(document).ready(function() {
-        $('select').addClass('form-control');
-
-        setTimeout(function() {
-            $('.alert').fadeOut();
-        }, 3000);
-    })
-</script>
+<!-- Scripts for show pages -->
+<%= javascript_include_tag 'showScripts' %>

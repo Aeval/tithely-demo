@@ -1,22 +1,16 @@
 class SermonsController < ApplicationController
     protect_from_forgery with: :null_session
+    
     def index
         #Pass variables to page view, ordered and paginated
         @sermons = Sermon.all.order('created_at DESC')
         @page_sermons = @sermons.paginate(page:params[:page],per_page:10)
-
-        #To access data as API
-        #render json: SermonSerializer.new(sermons).serialized_json
     end
 
     def show
         #Pass variables to page view
         @sermon = Sermon.find(params[:id])
         @series = Series.all
-        @sgl_series = Series.find(@sermon.series_id)
-
-        #To access data as API
-        #render json: SermonSerializer.new(sermon, options).serialized_json
     end
 
     def new

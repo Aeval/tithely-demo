@@ -1,11 +1,5 @@
 <!-- Deliver alerts and messages -->
-<% flash.each do |msg, type| %>
-<% if(msg == 'notice') %>
-<p class="alert alert-success"><%= type %></p>
-<% else %>
-<p class="alert alert-danger"><%= type %></p>
-<% end %>
-<% end %>
+<%= render 'partials/alerts' %>
 
 <!-- Main Container -->
 <div class="container">
@@ -14,17 +8,17 @@
             <!-- Check if series/sermon pic exists -->
             <% if @sermon.sermonPic.attached? %>
             <img class="card-img-top" height="500px" width="500px" src="<%=(url_for(@sermon.sermonPic))%>">
-            <% elsif @sgl_series.seriesPic.attached? %>
-            <img class="card-img-top" height="500px" width="500px" src="<%=(url_for(@sgl_series.seriesPic))%>">
+            <% elsif @sermon.series.seriesPic.attached? %>
+            <img class="card-img-top" height="500px" width="500px" src="<%=(url_for(@sermon.series.seriesPic))%>">
             <% else %>
             <img height="500px" width="500px" src="<%=(image_path('churchsquare.jpg'))%>" class="card-img-top" alt="church square">
             <% end %>
         </div>
         <!-- Sermon card formating -->
         <div class="card-footer text-muted">
-            <% if @sgl_series.id != 0 %>
+            <% if @sermon.series.id != 0 %>
             <div class="row">
-                <p class="mr-auto my-auto">Series: <%= link_to (@sgl_series.title), series_path(@sgl_series.slug) %></p>
+                <p class="mr-auto my-auto">Series: <%= link_to (@sermon.series.title), series_path(@sermon.series.slug) %></p>
             </div>
             <% end  %>
             <div class="row">
@@ -119,29 +113,5 @@
         top: 15vh;
     }
 </style>
-<script>
-    $('#editBtn').on('click', () => {
-        $('.backdrop').toggleClass('d-none');
-    });
-
-    $('#closeBtn').on('click', () => {
-        $('.backdrop').toggleClass('d-none');
-    });
-
-    $('.fa-cog').click((e) => {
-        if ($('.button-wrapper').hasClass('d-none')) {
-            $('.button-wrapper').removeClass('d-none');
-        } else {
-            $('.button-wrapper').addClass('d-none');
-        }
-
-    });
-
-    $(document).ready(function() {
-        $('select').addClass('form-control');
-
-        setTimeout(function() {
-            $('.alert').fadeOut();
-        }, 3000);
-    });
-</script>
+<!-- Scripts for show pages -->
+<%= javascript_include_tag 'showScripts' %>

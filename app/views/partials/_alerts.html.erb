@@ -1,0 +1,8 @@
+<!-- Deliver alerts and messages -->
+<% flash.each do |msg, type| %>
+<% if(msg == 'notice') %>
+<p class="alert alert-success"><%= type %></p>
+<% else %>
+<p class="alert alert-danger"><%= type %></p>
+<% end %>
+<% end %>

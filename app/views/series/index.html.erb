@@ -6,13 +6,7 @@
 </div>
 
 <!-- Deliver alerts and messages -->
-<% flash.each do |msg, type| %>
-<% if(msg == 'notice') %>
-<p class="alert alert-success"><%= type %></p>
-<% else %>
-<p class="alert alert-danger"><%= type %></p>
-<% end %>
-<% end %>
+<%= render 'partials/alerts' %>
 
 <!-- Create a list card for each series  -->
 <% @page_series.each do |series| %>
@@ -38,12 +32,7 @@
 <% end %>
 
 <!-- Pagination formating -->
-<div class="digg_pagination">
-    <div class="page_info">
-        <%= page_entries_info @page_series %>
-    </div>
-    <%= will_paginate @page_series, :container => false %>
-</div>
+<%= render 'partials/pagination', to_paginate: @page_series %>
 
 <style>
     .photo-wrapper {
@@ -56,37 +45,5 @@
         box-shadow: 23px 23px 12px -6px rgba(0, 0, 0, 0.75);
     }
 </style>
-
-<script>
-    $('.card').hover(function(e) {
-        $(this).addClass('hovered');
-        $(this).animate({
-            margin: -10,
-            width: "+=20",
-            height: "+=20"
-        }, 200);
-        $(this).find('img').animate({
-            margin: 0,
-            width: "+=20",
-            height: "+=20"
-        }, 200);
-    }, function(e) {
-        $(this).removeClass('hovered');
-        $(this).animate({
-            margin: 0,
-            width: "-=20",
-            height: "-=20"
-        }, 200);
-        $(this).find('img').animate({
-            margin: 0,
-            width: "-=20",
-            height: "-=20"
-        }, 200);
-    });
-
-    $(document).ready(function() {
-        setTimeout(function() {
-            $('.alert').fadeOut();
-        }, 3000);
-    })
-</script>
+<!-- Scripts for index pages -->
+<%= javascript_include_tag 'indexScripts' %>

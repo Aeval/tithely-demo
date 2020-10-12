@@ -1,0 +1,29 @@
+<% @page_sermons.each do |sermon| %>
+<div class='card bg-light card-body'>
+    <div class="row no-gutters">
+        <div class="col">
+            <div class="photo-wrapper">
+                <!-- Check if sermon pic exists -->
+                <% if sermon.sermonPic.attached? %>
+                <img height="200px" width="200px" src="<%=(url_for(sermon.sermonPic))%>">
+                <!-- if not, use series -->
+                <% elsif sermon.series.seriesPic.attached? %>
+                <img height="200px" width="200px" src="<%=(url_for(sermon.series.seriesPic))%>" class="card-img" alt="church square">
+                <!-- if not, use default -->
+                <% else %>
+                <img height="200px" width="200px" src="<%=(image_path('churchsquare.jpg'))%>" class="card-img" alt="church square">
+                <% end %>
+            </div>
+        </div>
+        <div class="col-md-8 my-auto">
+            <!-- Inner sermon card formating -->
+            <div class="card-body">
+                <h4 class="card-title"><%= sermon.title %></h4>
+                <p class="card-text"><%= truncate(sermon.description, length: 250) %></p>
+                <p class="card-text"><small class="text-muted"><%= I18n.l(sermon.sermon_time, format: :long, locale: :'en-US') %></small></p>
+                <%= link_to "Read More", sermon_path(sermon), :class => 'btn btn-primary' %>
+            </div>
+        </div>
+    </div>
+</div>
+<% end %>

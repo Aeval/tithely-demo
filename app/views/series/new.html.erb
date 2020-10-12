@@ -1,13 +1,7 @@
 <h1 class='my-5'>Add New Series</h1>
 
 <!-- Deliver alerts and messages -->
-<% flash.each do |msg, type| %>
-<% if(msg == 'notice') %>
-<p class="alert alert-success"><%= type %></p>
-<% else %>
-<p class="alert alert-danger"><%= type %></p>
-<% end %>
-<% end %>
+<%= render 'partials/alerts' %>
 
 <!-- Setup form to create new series  -->
 <%= form_for :series, url: '/series' do |f| %>

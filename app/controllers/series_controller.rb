@@ -5,18 +5,12 @@ class SeriesController < ApplicationController
         #Pass variables to page view, ordered and paginated
         @series = Series.where.not(id: 0).order('created_at DESC')
         @page_series = @series.paginate(page:params[:page],per_page:10)
-
-        #To access data as API
-        #render json: SeriesSerializer.new(series, options).serialized_json
     end
 
     def show
         #Pass variables to page view, paginate interal sermons
         @series = Series.friendly.find(params[:slug])
         @page_sermons = @series.sermons.paginate(page:params[:page],per_page:3)
-
-        #To access data as API
-        #render json: SeriesSerializer.new(singleSeries, options).serialized_json
     end
 
     def new

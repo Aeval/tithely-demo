@@ -3,8 +3,9 @@ class Sermon < ApplicationRecord
   belongs_to :series
   has_one_attached :sermonPic
 
-  #Before creation: create slug from title and set sermon time to now
+  #Before save: strip spaces, capitalize title, and set sermon time to now
   before_save :cleanData
+
   #Validate attachment format
   validate :sermonPic_format
 
